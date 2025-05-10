@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户登录与注册</title>
+  <style>
+    /* 全局样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Microsoft YaHei', sans-serif;
+    }
+
+    body {
+      background: url('QQQ.png') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 背景遮罩 */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 1;
+    }
+
+    /* 顶部导航栏 */
+    .navbar {
+      position: relative;
+      z-index: 2;
+      background-color: rgba(255, 255, 255, 0.9);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navbar-left {
+      color: #007BFF;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .navbar-right {
+      text-align: right;
+    }
+
+    .navbar-name {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .navbar-id {
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* 容器样式 */
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 400px;
+      margin: 10vh auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /* 表单标题 */
+    .form-title {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    /* 输入框样式 */
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+      font-weight: 500;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      transition: border-color 0.3s;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: #007BFF;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+    }
+
+    /* 按钮样式 */
+    .btn {
+      width: 100%;
+      padding: 12px 0;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    /* 链接样式 */
+    .link {
+      display: block;
+      text-align: center;
+      margin-top: 15px;
+      color: #007BFF;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    .link:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
+
+    /* 页脚信息 */
+    .footer-info {
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      color: white;
+      font-size: 14px;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 5px 10px;
+      border-radius: 5px;
+      z-index: 2;
+    }
+
+    /* 动画效果 */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+<div class="overlay"></div>
+
+<!-- 顶部导航栏 -->
+<div class="navbar">
+  <div class="navbar-left">快递100</div>
+  <div class="navbar-right">
+    <div class="navbar-name">张伟杰</div>
+    <div class="navbar-id">220162401055</div>
+  </div>
+</div>
+
+<!-- 登录表单 -->
+<div id="login-container" class="container">
+  <h2 class="form-title">用户登录</h2>
+  <form id="loginForm">
+    <div class="form-group">
+      <label for="loginUsername">账号</label>
+      <input type="text" id="loginUsername" placeholder="请输入账号" required>
+    </div>
+    <div class="form-group">
+      <label for="loginPassword">密码</label>
+      <input type="password" id="loginPassword" placeholder="请输入密码" required>
+    </div>
+    <button type="submit" class="btn">登录</button>
+  </form>
+  <a href="#" id="register-link" class="link">注册账号</a>
+</div>
+
+<!-- 注册表单 (默认隐藏) -->
+<div id="register-container" class="container" style="display: none;">
+  <h2 class="form-title">账号注册</h2>
+  <form id="registerForm">
+    <div class="form-group">
+      <label for="regUsername">用户名</label>
+      <input type="text" id="regUsername" placeholder="请设置用户名" required>
+    </div>
+    <div class="form-group">
+      <label for="regPassword">密码</label>
+      <input type="password" id="regPassword" placeholder="请设置密码" required>
+    </div>
+    <div class="form-group">
+      <label for="phone">手机号码</label>
+      <input type="text" id="phone" placeholder="请输入手机号码" required>
+    </div>
+    <button type="submit" class="btn">注册</button>
+  </form>
+  <a href="#" id="login-link" class="link">返回登录</a>
+</div>
+
+<!-- 页脚信息 -->
+<div class="footer-info">
+  <p>学号：220162401055 | 姓名：张伟杰</p>
+</div>
+
+<script>
+  // 切换登录和注册表单
+  document.getElementById('register-link').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('login-container').style.display = 'none';
+    document.getElementById('register-container').style.display = 'block';
+  });
+
+  document.getElementById('login-link').addEventListener('click', function(e) {
+    e.preventDefault();
+    document.getElementById('register-container').style.display = 'none';
+    document.getElementById('login-container').style.display = 'block';
+  });
+
+  // 表单提交处理
+  document.getElementById('loginForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('登录功能将在后端实现');
+  });
+
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('注册功能将在后端实现');
+  });
+</script>
+</body>
+</html>
